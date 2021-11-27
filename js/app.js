@@ -22,22 +22,42 @@ function user_failure(error) {
     user_error.innerText = "Sorry something went wrong!";
     user_section.appendChild(user_error);
 }
-
+// User
+// To Do Container
+// Success
+// done to do stuff
+// Failure
+// Failed to do stuff
 function todo_success(response) {
+    var todo_container = document.createElement('section');
+    var todo_status_success = document.createElement('section');
+    var todo_status_fail = document.createElement('section');
+    todo_status_success.innerText = "Completed Tasks";
+    todo_status_fail.innerText = "Tasks To Do: ";
+
     for (var i = 0; i < response.data.length; i++) {
         get_parent = document.getElementById(response.data[i].userId);
-        var todo_container = document.createElement('section');
+        var todo_card = document.createElement('section');
         var todo_title = document.createElement('h1');
         todo_title.innerText = response.data[i].title;
         var todo_status = document.createElement('p');
         todo_status.innerText = response.data[i].completed;
-        todo_container.appendChild(todo_title);
-        todo_container.appendChild(todo_status);
-        get_parent.appendChild(todo_container);
+        todo_card.appendChild(todo_title);
+        todo_card.appendChild(todo_status);
 
 
+        if (response.data[i].completed === true) {
+
+            todo_status_success.appendChild(todo_card);
+        } else {
+            todo_status_fail.appendChild(todo_card);
+        }
 
     }
+
+    todo_container.appendChild(todo_status_success);
+    todo_container.appendChild(todo_status_fail);
+    get_parent.appendChild(todo_container);
 }
 
 function get_to_do() {
